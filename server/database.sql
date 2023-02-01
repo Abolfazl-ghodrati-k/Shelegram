@@ -1,6 +1,6 @@
 CREATE TABLE users(
     id SERIAL PRIMARY KEY,
-    usernmae VARCHAR(28) NOT NULL UNIQUE,
+    username VARCHAR(28) NOT NULL UNIQUE,
     passhash VARCHAR NOT NULL
 )
-INSRT INTO users(username, passhash) values($1,$2)
+INSRT INTO users(username, passhash) VALUES($1,$2) RETURNING id, username, passhash

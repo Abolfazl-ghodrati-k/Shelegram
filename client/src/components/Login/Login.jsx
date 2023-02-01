@@ -81,6 +81,7 @@ function Login() {
 						placeholder="Enter password"
 						autoComplete="off"
 						label={"password"}
+						type="password"
 					/>
 					<ButtonGroup pt={"1rem"}>
 						<Button colorScheme={"teal"} type="submit">
