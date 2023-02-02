@@ -17,10 +17,22 @@ import {
 import TextField from "./Login/TextField";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
+import { socket } from "../socket";
+import { useCallback, useContext } from "react";
+import { FriendContext } from "../Home";
+
 
 const AddFriendModal = ({ isOpen, onClose }) => {
+	const [error, seterror] = useState("");
+	const { setFriendList } = useContext(FriendContext);
+
+	const closeModal = useCallback(() => {
+		seterror("")
+		onClose()
+	},[onClose])
+
 	return (
-		<Modal isOpen={isOpen} onClose={onClose}>
+		<Modal isOpen={isOpen} onClose={closeModal}>
 			<ModalOverlay />
 			<ModalContent>
 				<ModalHeader>Add a friend</ModalHeader>
@@ -33,13 +45,32 @@ const AddFriendModal = ({ isOpen, onClose }) => {
 							.min(6, "Username too short!")
 							.max(28, "Username too long!"),
 					})}
-					onSubmit={() => {
-						onClose();
+					onSubmit={({ values }) => {
+						socket.emit(
+							"add_friend",
+							values.friendName,
+							({ done, errMsg, newUser }) => {
+								if (!done) {
+									seterror(errMsg?errMsg:'try again later bitch im busy');
+								} else {
+									if(newUser){
+										setFriendList()
+									}
+									closeModal();
+									return
+								}
+							}
+						);
 					}}
 				>
 					<Form>
 						<ModalBody w={"100%"}>
-							<TextField name="friendName" label={"Friends name"} placeholder="enter your friends name"/>
+							<Header as="p" color="red.600">{error}</Header>
+							<TextField
+								name="friendName"
+								label={"Friends name"}
+								placeholder="enter your friends name"
+							/>
 						</ModalBody>
 						<ModalFooter w={"100%"}>
 							<Button colorScheme="blue" type="submit">
