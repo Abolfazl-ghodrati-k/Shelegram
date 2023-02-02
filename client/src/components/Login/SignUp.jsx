@@ -1,21 +1,15 @@
-import {
-	VStack,
-	ButtonGroup,
-	FormControl,
-	FormLabel,
-	Button,
-	FormErrorMessage,
-	Input,
-	Heading,
-} from "@chakra-ui/react";
-import { Formik, useFormik } from "formik";
+import { VStack, ButtonGroup, Button, Heading } from "@chakra-ui/react";
+import { Formik } from "formik";
 import * as Yup from "yup";
 import TextField from "./TextField";
 import { useNavigate } from "react-router-dom";
 import { ArrowBackIcon } from "@chakra-ui/icons";
+import { useContext } from "react";
+import { AccountContext } from "../../Context/AccountContext";
 
 function SignUp() {
 	const navigate = useNavigate();
+	const { setUser } = useContext(AccountContext);
 
 	return (
 		<Formik
@@ -32,7 +26,7 @@ function SignUp() {
 			})}
 			onSubmit={(values, actions) => {
 				const vals = { ...values };
-				fetch("http://localhost:4000/auth/signup", {
+				fetch("http://localhost:5050/auth/signup", {
 					method: "POST",
 					credentials: "include",
 					headers: {
@@ -46,14 +40,14 @@ function SignUp() {
 					})
 					.then((res) => {
 						if (!res || !res.ok || res.status >= 400) {
-							console.log(res);
 							return;
 						}
 						return res.json();
 					})
 					.then((data) => {
 						if (!data) return;
-						console.log(data);
+						setUser({...data})
+						navigate('/home')
 					});
 			}}
 		>

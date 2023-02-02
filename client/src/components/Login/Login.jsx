@@ -1,20 +1,14 @@
-import {
-	VStack,
-	ButtonGroup,
-	FormControl,
-	FormLabel,
-	Button,
-	FormErrorMessage,
-	Input,
-	Heading,
-} from "@chakra-ui/react";
-import { Formik, useFormik } from "formik";
+import { VStack, ButtonGroup, Button, Heading } from "@chakra-ui/react";
+import { Formik } from "formik";
 import * as Yup from "yup";
 import TextField from "./TextField";
 import { useNavigate } from "react-router-dom";
+import { AccountContext } from "../../Context/AccountContext";
+import { useContext } from "react";
 
 function Login() {
 	const navigate = useNavigate();
+	const { setUser } = useContext(AccountContext);
 
 	return (
 		<Formik
@@ -31,12 +25,13 @@ function Login() {
 			})}
 			onSubmit={(values, actions) => {
 				const vals = { ...values };
-				fetch("http://localhost:4000/auth/login", {
+				fetch("http://localhost:5050/auth/login", {
 					method: "POST",
 					credentials: "include",
 					headers: {
 						"Content-Type": "application/json",
 					},
+					
 					body: JSON.stringify(vals),
 				})
 					.catch((err) => {
@@ -50,7 +45,8 @@ function Login() {
 					})
 					.then((data) => {
 						if (!data) return;
-						console.log(data);
+						setUser({ ...data });
+						navigate("/home");
 					});
 				actions.resetForm();
 			}}
