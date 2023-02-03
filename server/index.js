@@ -11,7 +11,7 @@ const {
 	wrap,
 	corsConfig,
 } = require("./controllers/serverController");
-const { Authorization, AddFriend, Disconnect } = require("./controllers/socketController");
+const { Authorization, AddFriend, Disconnect, dm } = require("./controllers/socketController");
 
 require("dotenv").config();
 const app = express();
@@ -42,6 +42,7 @@ io.on("connect", (socket) => {
 		AddFriend(socket, friendName, cb);
 	});
 	socket.on("disconnect", Disconnect)
+    socket.on("dm", message => dm(socket, message))
 });
 
 server.listen(5050, () => {
