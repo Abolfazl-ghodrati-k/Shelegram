@@ -27,5 +27,5 @@ Dark mode
 - contact actions: (blocking - pinning at top , ... )
 
 # check it out 
-[`Shelegram`](https://shelegram-demo.netlify.app/)
+[Shelegram](https://shelegram-demo.netlify.app/)
 
