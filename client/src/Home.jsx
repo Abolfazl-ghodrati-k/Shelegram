@@ -17,11 +17,11 @@ function Home() {
                 <div>
                     <SideBar />
                 </div>
-                <div>
+                {/* <div>
                     <MessagesContext.Provider>
                         <Chat userId={FriendList[friendIndex]} />
                     </MessagesContext.Provider>
-                </div>
+                </div> */}
             </section>
         </FriendContext.Provider>
     );
