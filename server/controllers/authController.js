@@ -31,6 +31,7 @@ module.exports.handleSignUp = async (req, res) => {
 		res.json({ loggedIn: false, status: "Username taken" });
 	}
 };
+
 module.exports.SignInAttempt = async (req, res) => {
 	const potentialLogin = await pool.query(
 		"SELECT id, username, passhash, userId FROM users u WHERE u.username=$1",

@@ -1,4 +1,3 @@
-const { socket } = require("../../client/src/socket");
 const redisClient = require("../redis");
 
 module.exports.Authorization = (socket, next) => {

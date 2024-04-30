@@ -1,11 +1,8 @@
 const express = require("express");
 const { Server } = require("socket.io");
 const helmet = require("helmet");
-const session = require("express-session");
 const cors = require("cors");
 const authRouter = require("./routes/authRouter");
-const RedisStore = require("connect-redis")(session);
-const redisClient = require("./redis");
 const {
 	sessionMiddleware,
 	wrap,
