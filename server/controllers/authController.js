@@ -15,6 +15,7 @@ module.exports.handleSignUp = async (req, res) => {
 		"SELECT username from users WHERE username=$1",
 		[req.body.username]
 	);
+	console.log(exsitingUser)
 	if (exsitingUser.rowCount == 0) {
 		const hashedPass = await bcrypt.hash(req.body.password, 10);
 		const newUserQuery = await pool.query(

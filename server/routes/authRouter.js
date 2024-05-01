@@ -15,4 +15,4 @@ router
 	.get(handleLogin)
 	.post(validateForm, rateLimiter(60, 10), SignInAttempt);
 
-module.exports = router;
+module.exports = router

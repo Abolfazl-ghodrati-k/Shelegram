@@ -43,5 +43,5 @@ io.on("connect", (socket) => {
 });
 
 server.listen(5050, () => {
-	console.log(app.get("env"));
+	console.log(app.get("env"), "running on port 5050");
 });
