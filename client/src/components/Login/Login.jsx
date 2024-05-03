@@ -65,14 +65,12 @@ function Login() {
                         <TextField
                             name="username"
                             placeholder="Enter username"
-                            autoComplete="off"
                             label={"username"}
                         />
 
                         <TextField
                             name="password"
                             placeholder="Enter password"
-                            autoComplete="off"
                             label={"password"}
                             type="password"
                         />

@@ -28,9 +28,9 @@ function SideBar() {
                 {friendList.length > 0 ? (
                     <div>
                         {friendList.map((friend) => (
-                            <div as={Tab} justify={"start"} w="100%">
+                            <div key={friend.username}>
                                 <FaCircle
-                                    color={friend.connected ? "green" : "red"}
+                                    color={friend.connected === "true" ? "green" : "red"}
                                     size={20}
                                 />
                                 <p>{friend.username}</p>

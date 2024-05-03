@@ -1,7 +1,4 @@
 const {Pool} = require('pg')
-const { app } = require('.')
-
-app
 
 const pool = new Pool({
    database: process.env.DATABASE_NAME ||"your_database_name",
@@ -10,4 +7,5 @@ const pool = new Pool({
    user: process.env.DATABASE_USER || "your_username",
    port: 5432,
 })
+
 module.exports = pool

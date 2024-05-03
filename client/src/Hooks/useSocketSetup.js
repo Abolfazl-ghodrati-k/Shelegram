@@ -2,12 +2,17 @@ import { useContext, useLayoutEffect } from "react";
 import { socket } from "../socket";
 import { AccountContext } from "../Context/AccountContext";
 
-export default function useSocketSetup({ setFriendList, setMessages }) {
+export default function useSocketSetup( setFriendList, setMessages ) {
     console.log(socket);
     const { setUser } = useContext(AccountContext);
 	
     useLayoutEffect(() => {
         socket.connect();
+        socket.emit("initialize_user", ({ friends, messages }) => {
+            console.log(friends)
+            setFriendList(friends);
+            setMessages(messages)
+        })
         socket.on("friends", (FriendList) => {
             setFriendList(FriendList);
         });
@@ -18,15 +23,7 @@ export default function useSocketSetup({ setFriendList, setMessages }) {
             setMessages((prev) => [message, ...prev]);
         });
         socket.on("connected", (status, username) => {
-            setFriendList((prev) => {
-                const friends = [...prev];
-                return friends.map((friend) => {
-                    if (friend.username === username) {
-                        friend.status = status;
-                    }
-                    return friend;
-                });
-            });
+            console.log(username)
         });
 
         socket.on("connect_error", () => {
@@ -41,5 +38,5 @@ export default function useSocketSetup({ setFriendList, setMessages }) {
             socket.off("connected");
             socket.off("friends");
         };
-    }, [setUser, setMessages, setFriendList, socket]);
+    }, [setUser, setMessages, setFriendList]);
 }

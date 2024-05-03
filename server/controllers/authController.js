@@ -9,12 +9,20 @@ module.exports.handleLogin = async (req, res) => {
         return res.json({ loggedIn: false });
     }
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
         if (err) {
             return res.json({ loggedIn: false, message: "Invalid Token" });
         } else {
             const { id, username } = decoded;
-            res.json({ loggedIn: true, token, username: username });
+            const existingUser = await pool.query(
+                "SELECT username from users WHERE username=$1",
+                [username]
+            );
+            if (existingUser.rowCount > 0) {
+                res.json({ loggedIn: true, token, username: username });
+            } else {
+                res.json({ loggedIn: false, message: "User Doesnt exist" });
+            }
         }
     });
 };
@@ -33,11 +41,12 @@ module.exports.handleSignUp = async (req, res) => {
         const user = {
             id: newUserQuery.rows[0].id,
             username: req.body.username,
+            userId: newUserQuery.rows[0].userId,
         };
         const token = jwt.sign(user, process.env.JWT_SECRET);
-        res.json({ loggedIn: true, token });
+        res.json({ loggedIn: true, token, username: user.username });
     } else {
-        res.json({ loggedIn: false, status: "Username taken" });
+        res.json({ loggedIn: false, message: "Username taken" });
     }
 };
 
@@ -55,6 +64,7 @@ module.exports.SignInAttempt = async (req, res) => {
             const user = {
                 id: potentialLogin.rows[0].id,
                 username: req.body.username,
+                userId: potentialLogin.rows[0].userId,
             };
             const token = jwt.sign(user, process.env.JWT_SECRET);
             res.json({ loggedIn: true, username: user.username, token });

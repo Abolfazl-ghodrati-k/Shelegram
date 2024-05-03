@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../api/axios";
 
@@ -10,7 +10,7 @@ const UserContext = ({ children }) => {
 
     const navigate = useNavigate();
 
-    const handleAuthorization = async () => {
+    const handleAuthorization = useCallback(async () => {
         const response = await axios.get("/auth/login");
         if (response.data) {
             if (response.data.loggedIn) {
@@ -24,7 +24,7 @@ const UserContext = ({ children }) => {
         } else {
             setUser({ loggedIn: false });
         }
-    };
+    }, [navigate]);
 
     useEffect(() => {
         setLoading(true);
@@ -32,7 +32,7 @@ const UserContext = ({ children }) => {
         setTimeout(() => {
             setLoading(false);
         }, 500);
-    }, []);
+    }, [handleAuthorization]);
 
     return (
         <AccountContext.Provider value={{ user, setUser }}>

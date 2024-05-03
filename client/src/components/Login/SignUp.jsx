@@ -1,4 +1,3 @@
-
 import { Formik } from "formik";
 import * as Yup from "yup";
 import TextField from "./TextField";
@@ -6,11 +5,30 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AccountContext } from "../../Context/AccountContext";
 import { toast } from "react-toastify";
+import axiosInstance from "../../api/axios";
 
 function SignUp() {
     const navigate = useNavigate();
     const { setUser } = useContext(AccountContext);
     const [loading, setLoading] = useState(false);
+
+    const handleSignUp = async (username, password) => {
+        const response = await axiosInstance.post("auth/signup", {
+            username,
+            password,
+        });
+        if (response.data) {
+            if (response.data.loggedIn) {
+                localStorage.setItem("token", response.data.token)
+                setUser({ ...response.data });
+                navigate("/home");
+            } else {
+                toast.error(response.data.message);
+            }
+        } else {
+            toast.error("Error on server")
+        }
+    };
 
     return (
         <div className="auth-form">
@@ -26,38 +44,10 @@ function SignUp() {
                         .min(6, "Password too short!")
                         .max(28, "Password too long!"),
                 })}
-                onSubmit={async (values, actions) => {
-                    const vals = { ...values };
+                onSubmit={async (values) => {
                     setLoading(true);
 
-                    await fetch("http://localhost:5050/auth/signup", {
-                        method: "POST",
-                        credentials: "include",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(vals),
-                    })
-                        .catch((err) => {
-                            toast.error(
-                                err.message ||
-                                    "Error on Server Please try again later"
-                            );
-                            console.log(err);
-                            return;
-                        })
-                        .then((res) => {
-                            if (!res || !res.ok || res.status >= 400) {
-                                toast.error("BooMM on server");
-                                return;
-                            }
-                            return res.json();
-                        })
-                        .then((data) => {
-                            if (!data) return;
-                            setUser({ ...data });
-                            navigate("/home");
-                        });
+                    await handleSignUp(values.username, values.password)
                     setLoading(false);
                 }}
             >
@@ -85,13 +75,9 @@ function SignUp() {
                         />
                         <div className="auth-form-buttons-container">
                             <button type="submit">
-							{loading ? "Loading ..." : "Sign Up"}
+                                {loading ? "Loading ..." : "Sign Up"}
                             </button>
-                            <button
-                                onClick={() => navigate("/")}
-                            >
-                                Back
-                            </button>
+                            <button onClick={() => navigate("/")}>Back</button>
                         </div>
                     </form>
                 )}

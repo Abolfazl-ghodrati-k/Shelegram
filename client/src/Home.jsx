@@ -1,5 +1,4 @@
 import SideBar from "./components/SideBar/SideBar";
-import Chat from "./components/Chat";
 import { createContext, useState } from "react";
 import useSocketSetup from "./Hooks/useSocketSetup";
 
@@ -8,11 +7,12 @@ export const MessagesContext = createContext();
 
 function Home() {
     const [friendList, setFriendList] = useState([]);
-    const [Messages, setMessages] = useState([]);
-    const [friendIndex, setfriendIndex] = useState(0);
+    const [messages, setMessages] = useState([]);
+    const [friendIndex, setFriendIndex] = useState(0);
     useSocketSetup(setFriendList, setMessages);
+    
     return (
-        <FriendContext.Provider value={{ friendList, setFriendList }}>
+        <FriendContext.Provider value={{ friendList, setFriendList, friendIndex, setFriendIndex }}>
             <section>
                 <SideBar />
                 {/* <div>
