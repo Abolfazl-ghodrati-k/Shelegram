@@ -1,4 +1,3 @@
-import { VStack, ButtonGroup, Button, Heading } from "@chakra-ui/react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import TextField from "./TextField";
@@ -7,11 +6,31 @@ import { AccountContext } from "../../Context/AccountContext";
 import { useContext, useState } from "react";
 import "./style.css";
 import { toast } from "react-toastify";
+import axiosInstance from "../../api/axios";
 
 function Login() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const { setUser } = useContext(AccountContext);
+
+    const handleLogin = async (username, password) => {
+        const response = await axiosInstance.post("/auth/login", {
+            username,
+            password,
+        });
+        if (response.data) {
+            if (response.data.loggedIn) {
+                console.log(response.data)
+                localStorage.setItem("token", response.data.token)
+                setUser({ ...response.data });
+                navigate("/home");
+            } else {
+                toast.error(response.data.message);
+            }
+        } else {
+            toast.error("Boom on server");
+        }
+    };
 
     return (
         <div className="auth-form">
@@ -29,38 +48,10 @@ function Login() {
                 })}
                 onSubmit={async (values, actions) => {
                     setLoading(true);
-                    const vals = { ...values };
-                    await fetch("http://localhost:5050/auth/login", {
-                        method: "POST",
-                        credentials: "include",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
+                    await handleLogin(values.username, values.password);
 
-                        body: JSON.stringify(vals),
-                    })
-                        .catch((err) => {
-                            toast.error(
-                                err.message ||
-                                    "Error on Server Please try again later"
-                            );
-                            console.log(err);
-                            return;
-                        })
-                        .then((res) => {
-                            if (!res || !res.ok || res.status >= 400) {
-                                toast.error("BooMM on server");
-                                return;
-                            }
-                            return res.json();
-                        })
-                        .then((data) => {
-                            if (!data) return;
-                            setUser({ ...data });
-                            navigate("/home");
-                        });
                     setLoading(false);
-                    actions.resetForm();
+                    // actions.resetForm();
                 }}
             >
                 {(formik) => (
@@ -85,9 +76,7 @@ function Login() {
                             label={"password"}
                             type="password"
                         />
-                        <div
-                            className="auth-form-buttons-container"
-                        >
+                        <div className="auth-form-buttons-container">
                             <button type="submit">
                                 {loading ? "Loading ..." : "Log In"}
                             </button>

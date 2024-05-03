@@ -4,7 +4,6 @@ import { useContext } from 'react';
 
 const useAuth = () => {
 	const {user} = useContext(AccountContext)
-	console.log(user)
 	return user && user.loggedIn;
 };
 

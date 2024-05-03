@@ -5,10 +5,10 @@ const TextField = ({ label, ...props }) => {
     const isInvalid = meta.touched && meta.error;
     return (
         <div
-            className={`${isInvalid ? "" : ""} auth-input-container`}
+            className={`${isInvalid ? "invalid-input-container" : ""} input-container`}
         >
             <label>{label}</label>
-            <input as={Field} {...field} {...props} />
+            <Field  {...field} {...props} />
             <span>{meta.error}</span>
         </div>
     );

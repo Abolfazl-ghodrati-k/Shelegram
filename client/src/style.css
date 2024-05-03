@@ -16,6 +16,43 @@ body {
     height: auto;
 }
 
-.modal::backdrop {
-    background-color: salmon;
+.input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 5px;
+
+    width: 100%;
+}
+
+.input-container input {
+    width: calc(100% - 22px);
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+.invalid-input-container input {
+    border: 1px solid red !important;
+}
+
+.invalid-input-container span {
+    color: red !important;
+}
+
+.clickable-icons {
+    border-radius: 50%;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.primary-button {
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: bisque;
+    cursor: pointer;
 }

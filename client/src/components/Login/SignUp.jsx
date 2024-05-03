@@ -1,9 +1,8 @@
-import { VStack, ButtonGroup, Button, Heading } from "@chakra-ui/react";
+
 import { Formik } from "formik";
 import * as Yup from "yup";
 import TextField from "./TextField";
 import { useNavigate } from "react-router-dom";
-import { ArrowBackIcon } from "@chakra-ui/icons";
 import { useContext, useState } from "react";
 import { AccountContext } from "../../Context/AccountContext";
 import { toast } from "react-toastify";
@@ -69,7 +68,7 @@ function SignUp() {
                             formik.handleSubmit();
                         }}
                     >
-                        <Heading>Sign Up</Heading>
+                        <h2>Sign Up</h2>
                         <TextField
                             name="username"
                             placeholder="Enter username"
@@ -85,12 +84,11 @@ function SignUp() {
                             type="password"
                         />
                         <div className="auth-form-buttons-container">
-                            <button colorScheme={"teal"} type="submit">
+                            <button type="submit">
 							{loading ? "Loading ..." : "Sign Up"}
                             </button>
                             <button
                                 onClick={() => navigate("/")}
-                                leftIcon={<ArrowBackIcon />}
                             >
                                 Back
                             </button>

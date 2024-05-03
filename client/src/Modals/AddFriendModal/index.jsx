@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from "react";
+import React, { useCallback, useContext, useRef, useState } from "react";
 import { FriendContext } from "../../Home";
 import "./style.css";
 import { GrClose } from "react-icons/gr";
@@ -7,21 +7,27 @@ import { Formik } from "formik";
 import { socket } from "../../socket";
 import* as Yup from "yup"
 import TextField from "../../components/Login/TextField";
+import useOutsideClick from "../../Hooks/useOutSideClick";
 
 const AddFrindModal = ({ onClose }) => {
     const [error, seterror] = useState("");
     const { setFriendList } = useContext(FriendContext);
+    const modalRef = useRef(null)
 
     const closeModal = useCallback(() => {
         seterror("");
         onClose();
     }, [onClose]);
 
+    useOutsideClick(modalRef, closeModal)
+
     return createPortal(
-        <dialog className="modal" open={true} onClose={onClose}>
+        <dialog className="modal" open={true} onClose={onClose} ref={modalRef}>
             <div className="add-friend-modal">
-                <h3>Add a friend</h3>
-                <GrClose />
+                <div className="add-friend-modal-header">
+                   <h3>Add a friend</h3>
+                   <GrClose className="clickable-icons" onClick={onClose} />
+                </div>
                 <Formik
                     initialValues={{ friendName: "" }}
                     validationSchema={Yup.object({
@@ -53,7 +59,7 @@ const AddFrindModal = ({ onClose }) => {
                     }}
                 >
                     <form>
-                        <div w={"100%"}>
+                        <div>
                             <p>{error}</p>
                             <TextField
                                 name="friendName"
@@ -61,7 +67,7 @@ const AddFrindModal = ({ onClose }) => {
                                 placeholder="enter your friends name"
                             />
                         </div>
-                        <button type="submit">Submit</button>
+                        <button type="submit" className="primary-button">Add</button>
                     </form>
                 </Formik>
             </div>

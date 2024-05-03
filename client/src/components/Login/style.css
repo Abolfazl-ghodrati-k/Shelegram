@@ -18,20 +18,6 @@
     padding: 15px;
 }
 
-.auth-input-container {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    gap: 5px;
-
-    width: 100%;
-}
-
-.auth-input-container input {
-    width: calc(100% - 22px);
-    padding: 10px;
-}
-
 .auth-form-buttons-container {
     display: flex;
     align-items: center;

@@ -1,4 +1,18 @@
 .add-friend-modal {
-    width: 370px;
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.add-friend-modal form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.add-friend-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
