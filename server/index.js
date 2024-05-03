@@ -4,11 +4,9 @@ const helmet = require("helmet");
 const cors = require("cors");
 const authRouter = require("./routes/authRouter");
 const {
-	sessionMiddleware,
-	wrap,
 	corsConfig,
 } = require("./controllers/serverController");
-const { Authorization, AddFriend, Disconnect, dm } = require("./controllers/socketController");
+const { Authorization, addFriend, disconnect, dm } = require("./controllers/socketController");
 
 require("dotenv").config();
 const app = express();
@@ -24,24 +22,22 @@ app.use(helmet());
 app.use(cors(corsConfig));
 
 app.set("trust proxy", 1);
-
-app.use(sessionMiddleware);
 app.use(express.json());
 
 //! Routes
 app.use("/auth", authRouter);
 
 app.get("/", (req, res) => res.send("Hi"));
-io.use(wrap(sessionMiddleware));
 io.use(Authorization);
 io.on("connect", (socket) => {
+	console.log("socket connected, user: ", socket.user)
 	socket.on("add_friend", (friendName, cb) => {
-		AddFriend(socket, friendName, cb);
+		addFriend(socket, friendName, cb);
 	});
-	socket.on("disconnect", Disconnect)
+	socket.on("disconnect", () => disconnect(socket))
     socket.on("dm", message => dm(socket, message))
 });
 
 server.listen(5050, () => {
-	console.log(app.get("env"), "running on port 5050");
+	console.log(app.get("env"));
 });

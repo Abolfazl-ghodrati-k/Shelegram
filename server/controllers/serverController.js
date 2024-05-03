@@ -1,27 +1,22 @@
-const session = require("express-session");
-const RedisStore = require("connect-redis")(session);
-const redisClient = require("../redis");
-const { app } = require("../index");
+const jwt = require("jsonwebtoken");
 
-const sessionMiddleware = session({
-	secret: "process.env.COOKIE_SECRET",
-	store: new RedisStore({ client: redisClient }),
-	name: "sid",
-	resave: false,
-	saveUninitialized: false,
-	cookie: {
-		secure: "true",
-		httpOnly: true,
-		expires: 1000 * 60 * 60 * 24,
-		sameSite: "lax",
-	},
-});
-
-const wrap = (expressMiddleWare) => (socket, next) =>
-	expressMiddleWare(socket.request, {}, next);
+const verifyToken = (req, res, next) => {
+    const token = req.headers.authorization;
+    if (!token) {
+        return res.status(401).json({ message: "No token provided" });
+    }
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        if (err) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+        req.user = decoded; // Store decoded user data on request for future use
+        next();
+    });
+};
 
 const corsConfig = {
-	origin: "http://localhost:5000",
-	credentials: true,
+    origin: "http://localhost:5000",
+    credentials: true,
 };
-module.exports = { sessionMiddleware, wrap, corsConfig };
+
+module.exports = {  corsConfig, verifyToken };
