@@ -17,9 +17,13 @@ function SideBar() {
         setIsOpen(false);
     }, []);
 
-    const changeActiveFriendIndex = useCallback((id) => {
-        setFriendIndex(id)
-    }, [setFriendIndex]);
+    const changeActiveFriendIndex = useCallback(
+        (id) => {
+            setFriendIndex(id);
+            localStorage.setItem("friendId", id);
+        },
+        [setFriendIndex]
+    );
 
     return (
         <>
