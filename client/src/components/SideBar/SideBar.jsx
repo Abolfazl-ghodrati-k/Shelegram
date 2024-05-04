@@ -5,7 +5,7 @@ import { FaCircle } from "react-icons/fa";
 import AddFriendModal from "../../Modals/AddFriendModal";
 import "./style.css";
 import { Link } from "react-router-dom";
-import Thumbnail from "../Thumbnail";
+import Thumbnail from "../Image";
 import { AccountContext } from "../../Context/AccountContext";
 
 function SideBar() {

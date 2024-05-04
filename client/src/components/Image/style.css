@@ -1,6 +1,4 @@
 .thumbnail-image {
-    width: 30px;
-    height: 30px;
 
     object-fit: contain;
     border-radius: 50%;
@@ -8,16 +6,12 @@
 }
 
 .loading-circle {
-    width: 30px;
-    height: 30px;
     border-radius: 50%;
     background-color: #f0f0f0; /* Light gray color */
     animation: pulse 1.5s infinite ease-in-out;
 }
 
 .thumbnail-error {
-    width: 30px;
-    height: 30px;
     border-radius: 50%;
     background-color: purple;
 

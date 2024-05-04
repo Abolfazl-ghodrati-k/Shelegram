@@ -149,3 +149,19 @@ p {
 .no-message-container span {
     color: blue;
 }
+
+.swiper-container {
+    width: 100%;
+    max-width: 100%;
+    max-height: 100vh;
+    min-height: 0;
+    min-width: 0;
+}
+
+.swiper-slide-shadow-left {
+    background-image: none !important;
+}
+
+.swiper-slide-shadow-right {
+    background-image: none !important;
+}

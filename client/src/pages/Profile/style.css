@@ -1,0 +1,15 @@
+.profile-container {
+    display: flex;
+    margin: 5px auto;
+    overflow-x: hidden;
+
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-images {
+    max-width: 320px;
+    margin: 5px auto;
+}
+
+
