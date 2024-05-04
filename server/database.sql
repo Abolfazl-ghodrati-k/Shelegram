@@ -4,3 +4,12 @@ CREATE TABLE users(
     passhash VARCHAR NOT NULL,
     userId VARCHAR NOT NULL UNIQUE
 );
+
+CREATE TABLE profiles (
+    id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id),
+    profile_image_url TEXT,
+    bio TEXT,
+    first_name TEXT,
+    last_name TEXT
+);

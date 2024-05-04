@@ -1,5 +1,5 @@
 .chat-container {
-    height:  calc(100vh - 40px);
+    height: calc(100vh - 40px);
     align-self: end;
     overflow-y: hidden;
     flex-grow: 1;
@@ -11,8 +11,33 @@
 .messages-container {
     display: flex;
     flex-direction: column-reverse;
+    gap: 5px;
     width: 100%;
     max-height: calc(100% - 50px);
     overflow-y: auto;
+}
 
+.message {
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: auto;
+    text-overflow: clip;
+    max-width: 50%;
+}
+
+.friends-message {
+    margin-right: auto;
+    background-color: rgb(105, 49, 49);
+    border-radius: 5px 5px 5px 0;
+    padding: 10px 30px 10px 10px;
+}
+
+.my-message {
+    margin-left: auto;
+    background-color: rgb(28, 103, 24);
+    padding: 10px 10px 10px 30px;
+
+    border-radius: 6px 5px 0 5px;
 }

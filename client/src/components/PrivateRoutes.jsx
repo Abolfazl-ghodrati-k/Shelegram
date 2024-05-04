@@ -1,15 +1,14 @@
-import { Outlet, Navigate } from 'react-router-dom';
-import { AccountContext } from '../Context/AccountContext';
-import { useContext } from 'react';
+import { Navigate } from "react-router-dom";
+import { AccountContext } from "../Context/AccountContext";
+import { useContext } from "react";
 
-const useAuth = () => {
-	const {user} = useContext(AccountContext)
-	return user && user.loggedIn;
+const withAuth = (WrappedComponent) => {
+    const AuthComponent = () => {
+        const { user } = useContext(AccountContext);
+        const isAuth = user && user.loggedIn;
+        return isAuth ? <WrappedComponent /> : <Navigate to={"/"} />;
+    };
+    return AuthComponent;
 };
 
-const PrivateRoutes = () => {
-	const isAuth = useAuth();
-	return isAuth ? <Outlet /> : <Navigate to={"/"} />;
-};
-
-export default PrivateRoutes;
+export default withAuth;

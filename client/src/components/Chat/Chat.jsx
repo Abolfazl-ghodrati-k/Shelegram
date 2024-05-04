@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useEffect, useMemo } from "react";
+import React, { useContext, useMemo } from "react";
 import { FriendContext } from "../../Home";
 import { MessagesContext } from "../../Home";
 import ChatBox from "../ChatBox/ChatBox";
@@ -15,24 +15,45 @@ function Chat({ userid: userId }) {
     }, [userId]);
 
     const activeFriend = friendList.find((friend) => friend.userid === userid);
+    const chatsMessages = messages.filter(
+        (msg) =>
+            msg.to === activeFriend.userid || msg.from === activeFriend.userid
+    );
 
     return activeFriend ? (
         <div className="chat-container">
-            <div style={{ flexGrow: 1 }}> </div>
-            <div
-                key={`chat:${activeFriend.username}`}
-                className="messages-container"
-            >
-                {messages
-                    .filter(
-                        (msg) =>
-                            msg.to === activeFriend.userid ||
-                            msg.from === activeFriend.userid
-                    )
-                    .map((message, index) => (
-                        <p key={`msg:${index}`}>{message.content}</p>
-                    ))}
-            </div>
+            {chatsMessages.length > 0 ? (
+                <>
+                    <div style={{ flexGrow: 1 }}> </div>
+                    <div
+                        key={`chat:${activeFriend.username}`}
+                        className="messages-container"
+                    >
+                        {chatsMessages.map((message, index) => (
+                            <p
+                                key={`msg:${index}`}
+                                className={`${
+                                    message.to === userid
+                                        ? "my-message"
+                                        : "friends-message"
+                                } message`}
+                            >
+                                {message.content}
+                            </p>
+                        ))}
+                    </div>
+                </>
+            ) : (
+                <div className="no-message-container">
+                    <p>
+                        No message found 🤷‍♂️ <br />
+                        start chatting with <span>
+                            {activeFriend.username}
+                        </span>{" "}
+                        ⬇️
+                    </p>
+                </div>
+            )}
             <ChatBox userid={userid} />
         </div>
     ) : null;

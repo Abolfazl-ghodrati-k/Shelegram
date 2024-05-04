@@ -5,6 +5,7 @@ import Chat from "./components/Chat/Chat";
 import useIsMobile from "./Hooks/useIsMobile";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { socket } from "./socket";
+import withAuth from "./components/PrivateRoutes";
 
 export const FriendContext = createContext();
 export const MessagesContext = createContext();
@@ -16,7 +17,7 @@ function Home() {
         socket.emit("initialize_user", ({ friends }) => {
             setFriendList(friends);
         });
-    }, [])
+    }, []);
 
     const toggleSidebar = () => {
         setShowSidebar(!showSidebar);
@@ -26,6 +27,12 @@ function Home() {
     const [friendIndex, setFriendIndex] = useState(0);
     useSocketSetup(setFriendList, setMessages);
     const isMobile = useIsMobile();
+
+    useEffect(() => {
+        if (!isMobile) {
+            setShowSidebar(true);
+        }
+    }, [isMobile]);
 
     return (
         <FriendContext.Provider
@@ -41,7 +48,9 @@ function Home() {
                             : showSidebar
                             ? "desktop-sidebar-show"
                             : "desktop-sidebar-hide"
-                    } ${isMobile ? "mobile-sidebar" : "desktop-sidebar"} sidebar`}
+                    } ${
+                        isMobile ? "mobile-sidebar" : "desktop-sidebar"
+                    } sidebar`}
                 >
                     <SideBar />
                 </div>
@@ -64,4 +73,4 @@ function Home() {
     );
 }
 
-export default Home;
+export default withAuth(Home);

@@ -1,0 +1,32 @@
+.thumbnail-image {
+    width: 30px;
+    height: 30px;
+
+    object-fit: contain;
+    border-radius: 50%;
+    border: 1px solid black;
+}
+
+.loading-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #f0f0f0; /* Light gray color */
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.thumbnail-error {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: purple;
+
+    text-align: center;
+    font-size: .8rem;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}

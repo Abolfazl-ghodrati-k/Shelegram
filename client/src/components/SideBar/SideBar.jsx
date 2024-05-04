@@ -4,10 +4,14 @@ import { CiChat1 } from "react-icons/ci";
 import { FaCircle } from "react-icons/fa";
 import AddFriendModal from "../../Modals/AddFriendModal";
 import "./style.css";
+import { Link } from "react-router-dom";
+import Thumbnail from "../Thumbnail";
+import { AccountContext } from "../../Context/AccountContext";
 
 function SideBar() {
     const [isOpen, setIsOpen] = useState(false);
     const { friendList, setFriendIndex } = useContext(FriendContext);
+    const { user } = useContext(AccountContext);
 
     const onOpen = useCallback(() => {
         setIsOpen(true);
@@ -25,9 +29,15 @@ function SideBar() {
         [setFriendIndex]
     );
 
+    const profileImage = "111";
+
     return (
         <>
             <aside className="sidebar-container">
+                <Link to="/profile" className="profile-button-container">
+                    <Thumbnail source={profileImage} />
+                    <p>{user.username}</p>
+                </Link>
                 <div className="sidebar-add-friend">
                     <h3>Add Friend</h3>
                     <button onClick={onOpen}>

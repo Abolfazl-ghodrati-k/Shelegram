@@ -64,6 +64,7 @@ module.exports.initializeUser = async (socket) => {
             from: parsedStr[1],
             content: parsedStr[2],
             id: parsedStr[3],
+            date: parsedStr[4]
         };
     });
 
@@ -166,12 +167,14 @@ const parseFriendList = async (friendList) => {
 
 module.exports.dm = async (socket, message) => {
     const id = uuidV4();
-    const parsedMessage = { ...message, from: socket.user.userid, id };
+    const date = new Date();
+    const parsedMessage = { ...message, from: socket.user.userid, id, date };
     const messageString = [
         parsedMessage.to,
         parsedMessage.from,
         parsedMessage.content,
         parsedMessage.id,
+        parsedMessage.date,
     ].join(".");
     await redisClient.lpush(`chat:${message.to}`, messageString);
     await redisClient.lpush(`chat:${socket.user.userid}`, messageString);
