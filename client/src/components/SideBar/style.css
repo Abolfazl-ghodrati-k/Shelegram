@@ -26,3 +26,18 @@
 
     border: 1px solid black;
 }
+
+.friend-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
+}
+
+.friend-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+

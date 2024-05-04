@@ -2,7 +2,7 @@ import { useCallback, useContext, useState } from "react";
 import { FriendContext } from "../../Home";
 import { CiChat1 } from "react-icons/ci";
 import { FaCircle } from "react-icons/fa";
-import AddFriendModal from "../../Modals/AddFriendModal"
+import AddFriendModal from "../../Modals/AddFriendModal";
 import "./style.css";
 
 function SideBar() {
@@ -26,14 +26,22 @@ function SideBar() {
                 </div>
                 {/* <Divider /> */}
                 {friendList.length > 0 ? (
-                    <div>
+                    <div className="friend-list-container">
                         {friendList.map((friend) => (
-                            <div key={friend.username}>
-                                <FaCircle
-                                    color={friend.connected === "true" ? "green" : "red"}
-                                    size={20}
-                                />
+                            <div
+                                key={friend.username}
+                                className="friend-container"
+                            >
                                 <p>{friend.username}</p>
+                                <FaCircle
+                                    className="status-indicator"
+                                    color={
+                                        friend.connected === "true"
+                                            ? "green"
+                                            : "red"
+                                    }
+                                    size={10}
+                                />
                             </div>
                         ))}
                     </div>

@@ -50,7 +50,7 @@ module.exports.initializeUser = async (socket) => {
     const friendRooms = parsedFriendList.map((friend) => friend.userid);
     
     if (friendRooms.length > 0)
-        socket.to(friendRooms).emit("connected", true, socket.user.username);
+        socket.to(friendRooms).emit("connected", "true", socket.user.username);
 
     const msgQuery = await redisClient.lrange(
         `chat:${socket.user.userid}`,
@@ -79,7 +79,7 @@ module.exports.disconnect = async (socket) => {
         await redisClient.hset(
             `userid:${socket.user.username}`,
             "connected",
-            false
+            "false"
         );
         const friendList = await redisClient.lrange(
             `friends:${socket.user.username}`,
@@ -90,7 +90,7 @@ module.exports.disconnect = async (socket) => {
         const friendRooms = await parseFriendList(friendList).then((friends) =>
             friends.map((friend) => friend.userid)
         );
-        socket.to(friendRooms).emit("connected", false, socket.user.username);
+        socket.to(friendRooms).emit("connected", 'false', socket.user.username);
     } catch (error) {
         console.log("error ");
     }
