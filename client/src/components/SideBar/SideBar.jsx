@@ -7,13 +7,19 @@ import "./style.css";
 
 function SideBar() {
     const [isOpen, setIsOpen] = useState(false);
-    const { friendList } = useContext(FriendContext);
+    const { friendList, setFriendIndex } = useContext(FriendContext);
+
     const onOpen = useCallback(() => {
         setIsOpen(true);
     }, []);
+
     const onClose = useCallback(() => {
         setIsOpen(false);
     }, []);
+
+    const changeActiveFriendIndex = useCallback((id) => {
+        setFriendIndex(id)
+    }, [setFriendIndex]);
 
     return (
         <>
@@ -31,6 +37,9 @@ function SideBar() {
                             <div
                                 key={friend.username}
                                 className="friend-container"
+                                onClick={() =>
+                                    changeActiveFriendIndex(friend.userid)
+                                }
                             >
                                 <p>{friend.username}</p>
                                 <FaCircle
