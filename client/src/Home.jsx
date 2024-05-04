@@ -20,8 +20,6 @@ function Home() {
     useSocketSetup(setFriendList, setMessages);
     const isMobile = useIsMobile();
 
-    console.log(isMobile);
-
     return (
         <FriendContext.Provider
             value={{ friendList, setFriendList, friendIndex, setFriendIndex }}
@@ -36,7 +34,7 @@ function Home() {
                             : showSidebar
                             ? "desktop-sidebar-show"
                             : "desktop-sidebar-hide"
-                    } ${isMobile ? "mobile-sidebar" : "desktop-sidebar"} `}
+                    } ${isMobile ? "mobile-sidebar" : "desktop-sidebar"} sidebar`}
                 >
                     <SideBar />
                 </div>
@@ -51,11 +49,9 @@ function Home() {
                             : "button-sidebar-hide"
                     }`}
                 />
-                <div>
-                    <MessagesContext.Provider value={{ messages }}>
-                        <Chat userid={friendIndex} />
-                    </MessagesContext.Provider>
-                </div>
+                <MessagesContext.Provider value={{ messages, setMessages }}>
+                    <Chat userid={friendIndex} />
+                </MessagesContext.Provider>
             </section>
         </FriendContext.Provider>
     );

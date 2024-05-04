@@ -3,13 +3,13 @@ import { socket } from "../socket";
 import { AccountContext } from "../Context/AccountContext";
 
 export default function useSocketSetup(setFriendList, setMessages) {
-    console.log(socket);
     const { setUser } = useContext(AccountContext);
 
     useLayoutEffect(() => {
         socket.connect();
         socket.emit("initialize_user", ({ friends, messages }) => {
             console.log(friends);
+            console.log(messages);
             setFriendList(friends);
             setMessages(messages);
         });
@@ -19,7 +19,7 @@ export default function useSocketSetup(setFriendList, setMessages) {
         socket.on("messages", (messages) => {
             setMessages(messages);
         });
-        socket.on("dm", (message) => {
+        socket.on("recievedm", (message) => {
             setMessages((prev) => [message, ...prev]);
         });
         socket.on("connected", (status, username) => {

@@ -1,10 +1,12 @@
 import { Formik } from "formik";
 import React, { useContext } from "react";
 import * as Yup from "yup";
-import { socket } from "../socket";
-import { MessagesContext } from "../Home";
+import { socket } from "../../socket";
+import { MessagesContext } from "../../Home";
+import TextField from "../Login/TextField";
+import "./style.css";
 
-function ChatBox({ userId }) {
+function ChatBox({ userid }) {
     const { setMessages } = useContext(MessagesContext);
     return (
         <Formik
@@ -14,7 +16,7 @@ function ChatBox({ userId }) {
             })}
             onSubmit={(values, actions) => {
                 const message = {
-                    to: userId,
+                    to: userid,
                     from: null,
                     content: values.message,
                 };
@@ -23,10 +25,18 @@ function ChatBox({ userId }) {
                 actions.resetForm();
             }}
         >
-            <HStack as={Form} w="100%" pb="1rem" px="1.2em">
-                <input name="message" placeholder="Type message here..." />
-                <button type="submit">Send</button>
-            </HStack>
+            {(formik) => (
+                <form
+                    onSubmit={formik.handleSubmit}
+                    className="send-message-form"
+                >
+                    <TextField
+                        name="message"
+                        placeholder="Type message here..."
+                    />
+                    <button type="submit" className="primary-button">Send</button>
+                </form>
+            )}
         </Formik>
     );
 }

@@ -1,0 +1,17 @@
+.send-message-form {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.send-message-form input {
+    border-radius: 5px 0 0 5px;
+}
+
+.send-message-form button {
+    border-radius: 0 5px 5px 0;
+    height: 100%;
+    padding: 10px 5px;
+    border-left: 0;
+    width: 200px;
+}

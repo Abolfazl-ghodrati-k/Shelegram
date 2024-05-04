@@ -170,5 +170,7 @@ module.exports.dm = async (socket, message) => {
     await redisClient.lpush(`chat:${message.to}`, messageString);
     await redisClient.lpush(`chat:${socket.user.userid}`, messageString);
 
-    socket.to(parsedMessage.to).emit("dm", parsedMessage);
+    console.log(parsedMessage)
+
+    socket.to(parsedMessage.to).emit("recievedm", parsedMessage);
 };
