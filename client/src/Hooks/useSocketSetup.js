@@ -7,20 +7,28 @@ export default function useSocketSetup(setFriendList, setMessages) {
 
     useLayoutEffect(() => {
         socket.connect();
-        socket.emit("initialize_user", ({ friends, messages }) => {
-            console.log(friends);
-            console.log(messages);
-            setFriendList(friends);
-            setMessages(messages);
-        });
         socket.on("friends", (FriendList) => {
             setFriendList(FriendList);
         });
         socket.on("messages", (messages) => {
+            console.log(messages);
             setMessages(messages);
         });
         socket.on("recievedm", (message) => {
-            setMessages((prev) => [message, ...prev]);
+            console.log("message");
+            setMessages((prev) => {
+                if (prev.some((prevMessage) => prevMessage.id === message.id)) {
+                    console.log(
+                        prev.some(
+                            (prevMessage) => prevMessage.id === message.id
+                        ),
+                        message
+                    );
+                    return prev;
+                } else {
+                    return [message ,...prev];
+                }
+            });
         });
         socket.on("connected", (status, username) => {
             setFriendList((friends) =>

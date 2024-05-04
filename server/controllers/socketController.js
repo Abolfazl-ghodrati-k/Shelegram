@@ -1,6 +1,7 @@
 const pool = require("../db");
 const redisClient = require("../redis");
 const jwt = require("jsonwebtoken");
+const { v4: uuidV4 } = require("uuid");
 
 module.exports.Authorization = (socket, next) => {
     const token = socket.handshake.auth.token;
@@ -29,8 +30,6 @@ module.exports.Authorization = (socket, next) => {
 
 module.exports.initializeUser = async (socket) => {
     socket.join(socket.user.userid);
-    console.log("initializing", socket.user.userid);
-    console.log(socket)
 
     redisClient.hset(
         `userid:${socket.user.username}`,
@@ -48,7 +47,7 @@ module.exports.initializeUser = async (socket) => {
     const parsedFriendList = await parseFriendList(FriendList);
 
     const friendRooms = parsedFriendList.map((friend) => friend.userid);
-    
+
     if (friendRooms.length > 0)
         socket.to(friendRooms).emit("connected", "true", socket.user.username);
 
@@ -60,7 +59,12 @@ module.exports.initializeUser = async (socket) => {
 
     const messages = msgQuery.map((msgStr) => {
         const parsedStr = msgStr.split(".");
-        return { to: parsedStr[0], from: parsedStr[1], content: parsedStr[2] };
+        return {
+            to: parsedStr[0],
+            from: parsedStr[1],
+            content: parsedStr[2],
+            id: parsedStr[3],
+        };
     });
 
     if (messages && messages.length > 0) {
@@ -68,9 +72,9 @@ module.exports.initializeUser = async (socket) => {
     }
 
     return {
-        parsedFriendList, messages
-    }
-
+        parsedFriendList,
+        messages,
+    };
 };
 
 module.exports.disconnect = async (socket) => {
@@ -90,7 +94,7 @@ module.exports.disconnect = async (socket) => {
         const friendRooms = await parseFriendList(friendList).then((friends) =>
             friends.map((friend) => friend.userid)
         );
-        socket.to(friendRooms).emit("connected", 'false', socket.user.username);
+        socket.to(friendRooms).emit("connected", "false", socket.user.username);
     } catch (error) {
         console.log("error ");
     }
@@ -161,16 +165,18 @@ const parseFriendList = async (friendList) => {
 };
 
 module.exports.dm = async (socket, message) => {
-    const parsedMessage = { ...message, from: socket.user.userid };
+    const id = uuidV4();
+    const parsedMessage = { ...message, from: socket.user.userid, id };
     const messageString = [
         parsedMessage.to,
         parsedMessage.from,
         parsedMessage.content,
+        parsedMessage.id,
     ].join(".");
     await redisClient.lpush(`chat:${message.to}`, messageString);
     await redisClient.lpush(`chat:${socket.user.userid}`, messageString);
 
-    console.log(parsedMessage)
+    console.log(messageString);
 
     socket.to(parsedMessage.to).emit("recievedm", parsedMessage);
 };

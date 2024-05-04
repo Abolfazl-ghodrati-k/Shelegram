@@ -1,15 +1,22 @@
 import SideBar from "./components/SideBar/SideBar";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import useSocketSetup from "./Hooks/useSocketSetup";
 import Chat from "./components/Chat/Chat";
 import useIsMobile from "./Hooks/useIsMobile";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { socket } from "./socket";
 
 export const FriendContext = createContext();
 export const MessagesContext = createContext();
 
 function Home() {
     const [showSidebar, setShowSidebar] = useState(false);
+
+    useEffect(() => {
+        socket.emit("initialize_user", ({ friends }) => {
+            setFriendList(friends);
+        });
+    }, [])
 
     const toggleSidebar = () => {
         setShowSidebar(!showSidebar);
