@@ -13,7 +13,7 @@ import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 
 // import required modules
-import { EffectCoverflow, Pagination } from "swiper/modules";
+import { EffectCoverflow } from "swiper/modules";
 
 const Profile = () => {
     const { user } = useContext(AccountContext);
@@ -37,8 +37,7 @@ const Profile = () => {
                     modifier: 1,
                     slideShadows: false,
                 }}
-                pagination={true}
-                modules={[EffectCoverflow, Pagination]}
+                modules={[EffectCoverflow]}
                 className="mySwiper"
             >
                 {images.map((image) => (

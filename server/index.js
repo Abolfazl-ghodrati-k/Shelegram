@@ -3,6 +3,7 @@ const { Server } = require("socket.io");
 const helmet = require("helmet");
 const cors = require("cors");
 const authRouter = require("./routes/authRouter");
+const profileRouter = require("./routes/profileRouter");
 const { corsConfig } = require("./controllers/serverController");
 const {
     Authorization,
@@ -30,6 +31,7 @@ app.use(express.json());
 
 //! Routes
 app.use("/auth", authRouter);
+app.use("/profile", profileRouter);
 
 app.get("/", (req, res) => res.send("Hi"));
 io.use(Authorization);

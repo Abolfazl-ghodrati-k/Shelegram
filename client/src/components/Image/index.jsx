@@ -13,7 +13,7 @@ const Image = ({ source, size }) => {
 
     return (
         <div className="thumbnail-container">
-            { !isError && (
+            {!isError && (
                 <img
                     src={source}
                     className={`thumbnail-image ${isLoading ? "hidden" : ""}`}
