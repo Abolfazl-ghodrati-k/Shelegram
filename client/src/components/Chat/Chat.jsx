@@ -14,10 +14,10 @@ function Chat({ userid: userId }) {
         return localStorage.getItem("friendId");
     }, [userId]);
 
-    const activeFriend = friendList.find((friend) => friend.userid === userid);
+    const activeFriend = friendList.find((friend) => friend?.userid === userid);
     const chatsMessages = messages.filter(
         (msg) =>
-            msg.to === activeFriend.userid || msg.from === activeFriend.userid
+            msg.to === activeFriend?.userid || msg.from === activeFriend?.userid
     );
 
     return activeFriend ? (
@@ -56,7 +56,7 @@ function Chat({ userid: userId }) {
             )}
             <ChatBox userid={userid} />
         </div>
-    ) : null;
+    ) : <p>Some error happened please sign out and try again</p>;
 }
 
 export default Chat;

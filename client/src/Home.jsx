@@ -24,7 +24,7 @@ function Home() {
     };
     const [friendList, setFriendList] = useState([]);
     const [messages, setMessages] = useState([]);
-    const [friendIndex, setFriendIndex] = useState(0);
+    const [friendIndex, setFriendIndex] = useState(null);
     useSocketSetup(setFriendList, setMessages);
     const isMobile = useIsMobile();
 
@@ -66,7 +66,7 @@ function Home() {
                     }`}
                 />
                 <MessagesContext.Provider value={{ messages, setMessages }}>
-                    <Chat userid={friendIndex} />
+                    {friendIndex && <Chat userid={friendIndex} />}
                 </MessagesContext.Provider>
             </section>
         </FriendContext.Provider>

@@ -38,6 +38,7 @@ const AddFrindModal = ({ onClose }) => {
                             .max(28, "Username too long!"),
                     })}
                     onSubmit={({ friendName }) => {
+                        console.log(friendName)
                         socket.emit(
                             "add_friend",
                             friendName,
