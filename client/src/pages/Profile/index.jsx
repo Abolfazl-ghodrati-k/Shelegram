@@ -1,53 +1,56 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import { AccountContext } from "../../Context/AccountContext";
 import withAuth from "../../components/PrivateRoutes";
-import Image from "../../components/Image";
 import "./style.css";
 
-// Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
+import ProfilePictures from "./components/ProfilePictures";
+import UserData from "./components/UserData";
 
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/effect-coverflow";
-import "swiper/css/pagination";
-
-// import required modules
-import { EffectCoverflow } from "swiper/modules";
+import { LuImagePlus } from "react-icons/lu";
 
 const Profile = () => {
     const { user } = useContext(AccountContext);
-    console.log(user);
     const images = [
-        "https://swiperjs.com/demos/images/nature-1.jpg",
-        "https://swiperjs.com/demos/images/nature-2.jpg",
-        "https://swiperjs.com/demos/images/nature-3.jpg",
+        // "https://avatars.githubusercontent.com/u/104020673?v=4",
+        // "https://avatars.githubusercontent.com/u/104020673?v=4",
     ];
+
+    const inputRef = useRef(null);
+
+    const handleOpenFileSelect = () => {
+        if (inputRef?.current) {
+            inputRef?.current?.click();
+        }
+    };
+
+    const handleImageUpload = (e) => {
+        const newImage = e.target.files[0];
+        if (newImage) {
+            // TODO: handle profile updating here
+        }
+    };
+
     return (
-        <div className="profile-images">
-            <Swiper
-                effect={"coverflow"}
-                grabCursor={true}
-                centeredSlides={true}
-                slidesPerView={3}
-                coverflowEffect={{
-                    rotate: 50,
-                    stretch: 0,
-                    depth: 100,
-                    modifier: 1,
-                    slideShadows: false,
-                }}
-                modules={[EffectCoverflow]}
-                className="mySwiper"
-            >
-                {images.map((image) => (
-                    <SwiperSlide>
-                        <Image source={image} size={150} />
-                    </SwiperSlide>
-                ))}
-            </Swiper>
+        <div className="profile-container">
+            <div className="profile-images">
+                <ProfilePictures images={images} />
+                <label htmlFor="profile-image" onClick={handleOpenFileSelect}>
+                    <LuImagePlus size={20} color="white" />
+                </label>
+                <input
+                    ref={inputRef}
+                    onChange={handleImageUpload}
+                    multiple={false}
+                    type="file"
+                    name="profile-image"
+                    accept="image/*"
+                />
+            </div>
+            <UserData
+                profile={{ ...user.profile, username: user.username } || null}
+            />
         </div>
     );
-}; 
+};
 
 export default withAuth(Profile);

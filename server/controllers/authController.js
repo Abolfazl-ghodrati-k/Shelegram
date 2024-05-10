@@ -15,11 +15,16 @@ module.exports.handleLogin = async (req, res) => {
         } else {
             const { id, username } = decoded;
             const existingUser = await pool.query(
-                "SELECT username from users WHERE username=$1",
+                "SELECT username, id from users WHERE username=$1",
                 [username]
             );
             if (existingUser.rowCount > 0) {
-                res.json({ loggedIn: true, token, username: username });
+                const usersProfile = await pool.query(
+                    "SELECT * from profiles WHERE user_id=$1",
+                    [existingUser.rows[0].id]
+                );
+                console.log(usersProfile, existingUser.rows[0].id)
+                res.json({ loggedIn: true, token, username: username, profile: usersProfile.rows[0] || null });
             } else {
                 res.json({ loggedIn: false, message: "User Doesnt exist" });
             }
