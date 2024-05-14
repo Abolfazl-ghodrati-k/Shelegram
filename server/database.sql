@@ -3,7 +3,7 @@ CREATE TABLE users(
     username VARCHAR(28) NOT NULL UNIQUE,
     passhash VARCHAR NOT NULL,
     userId VARCHAR NOT NULL UNIQUE
-);
+)
 
 CREATE TABLE profiles (
     id SERIAL PRIMARY KEY,
