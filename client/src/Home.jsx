@@ -9,10 +9,10 @@ export const FriendContext = createContext();
 export const MessagesContext = createContext();
 
 function Home() {
-  const [showSidebar, setShowSidebar] = useState(false);
+  const [showSideBar, setShowSidebar] = useState(false);
 
   const toggleSidebar = () => {
-    setShowSidebar(!showSidebar);
+    setShowSidebar(!showSideBar);
   };
   const [friendList, setFriendList] = useState([]);
   const [messages, setMessages] = useState([]);
@@ -20,7 +20,7 @@ function Home() {
   useSocketSetup(setFriendList, setMessages);
 
   const buttonClassNames = `button-sidebar ${
-    showSidebar ? "button-sidebar-show" : "button-sidebar-hide"
+    showSideBar ? "button-sidebar-show" : "button-sidebar-hide"
   }`;
 
   return (
@@ -28,14 +28,14 @@ function Home() {
       value={{ friendList, setFriendList, friendIndex, setFriendIndex }}
     >
       <section className="app-container">
-        <SideBar showSidebar={showSidebar} setShowSideBar={setShowSidebar} />
+        <SideBar showSideBar={showSideBar} setShowSideBar={setShowSidebar} />
         <RxHamburgerMenu
           onClick={toggleSidebar}
           size={30}
           className={buttonClassNames}
         />
         <MessagesContext.Provider value={{ messages, setMessages }}>
-          {friendIndex !== null && <Chat userid={friendIndex} />}
+          {friendIndex && <Chat userid={friendIndex} />}
         </MessagesContext.Provider>
       </section>
     </FriendContext.Provider>

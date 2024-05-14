@@ -14,7 +14,7 @@ function Chat({ userid: userId }) {
         return localStorage.getItem("friendId");
     }, [userId]);
 
-    const activeFriend = friendList.find((friend) => friend?.userid === userid);
+    const activeFriend = friendList.find((friend) => friend?.userid === userid || '');
     const chatsMessages = messages.filter(
         (msg) =>
             msg.to === activeFriend?.userid || msg.from === activeFriend?.userid

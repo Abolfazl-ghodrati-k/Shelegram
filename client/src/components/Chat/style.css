@@ -1,43 +1,47 @@
 .chat-container {
-    height: calc(100vh - 40px);
-    align-self: end;
-    overflow-y: hidden;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 30px 10px 0;
+  height: calc(100vh - 40px);
+  align-self: end;
+  overflow-y: hidden;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 10px 0;
 }
 
 .messages-container {
-    display: flex;
-    flex-direction: column-reverse;
-    gap: 5px;
-    width: 100%;
-    max-height: calc(100% - 50px);
-    overflow-y: auto;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 10px;
+  width: auto;
+  padding: 4px;
+  max-height: calc(100% - 60px);
+  overflow-y: auto;
 }
 
 .message {
-    font-size: 1.1rem;
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    width: auto;
-    text-overflow: clip;
-    max-width: 50%;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  width: auto;
+  text-overflow: clip;
+  max-width: 50%;
 }
 
 .friends-message {
-    margin-right: auto;
-    background-color: rgb(105, 49, 49);
-    border-radius: 5px 5px 5px 0;
-    padding: 10px 30px 10px 10px;
+  margin-right: auto;
+  background-color: rgb(0, 0, 0);
+  color: white;
+  border-radius: 5px 5px 5px 0;
+  padding: 10px 30px 10px 10px;
+  box-shadow: 2px 2px 2px gray;
 }
 
 .my-message {
-    margin-left: auto;
-    background-color: rgb(28, 103, 24);
-    padding: 10px 10px 10px 30px;
-
-    border-radius: 6px 5px 0 5px;
+  margin-left: auto;
+  background-color: rgb(255, 255, 255);
+  color: black;
+  padding: 10px 10px 10px 30px;
+  box-shadow: -2px 2px 2px gray;
+  border-radius: 6px 5px 0 5px;
 }

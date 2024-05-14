@@ -9,7 +9,7 @@ import Thumbnail from "../Image";
 import { AccountContext } from "../../Context/AccountContext";
 import useIsMobile from "../../Hooks/useIsMobile";
 
-function SideBar({ showSidebar, setShowSidebar }) {
+function SideBar({ showSideBar, setShowSideBar }) {
   const [isOpen, setIsOpen] = useState(false);
   const { friendList, setFriendIndex } = useContext(FriendContext);
   const { user } = useContext(AccountContext);
@@ -34,17 +34,17 @@ function SideBar({ showSidebar, setShowSidebar }) {
 
   useEffect(() => {
     if (!isMobile) {
-      setShowSidebar(true);
+      setShowSideBar(true);
     }
-  }, [isMobile, setShowSidebar]);
+  }, [isMobile, setShowSideBar]);
 
   const profileImage = "111";
   const sidebarClassNames = `${
     isMobile
-      ? showSidebar
+      ? showSideBar
         ? "mobile-sidebar-show"
         : "mobile-sidebar-hide"
-      : showSidebar
+      : showSideBar
       ? "desktop-sidebar-show"
       : "desktop-sidebar-hide"
   } ${isMobile ? "mobile-sidebar" : "desktop-sidebar"} sidebar`;
