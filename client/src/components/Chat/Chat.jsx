@@ -22,6 +22,35 @@ function Chat({ userid: userId }) {
       msg.to === activeFriend?.userid || msg.from === activeFriend?.userid
   );
 
+  const generateMessage = (message, index) => {
+    const messageDate = new Date(message.date);
+    return (
+      <p
+        key={`msg:${index}`}
+        className={`${
+          message.to === userid ? "my-message" : "friends-message"
+        } message`}
+      >
+        {message.content}
+        <small
+          className={`${
+            message.to === userid ? "my-message-date" : "friends-message-date"
+          } message-date`}
+        >
+          {messageDate.getFullYear() +
+            "/" +
+            messageDate.getMonth() +
+            "/" +
+            messageDate.getDate() +
+            " | " +
+            messageDate.getHours() +
+            ":" +
+            messageDate.getMinutes()}
+        </small>
+      </p>
+    );
+  };
+
   return activeFriend ? (
     <div className="chat-container">
       {chatsMessages.length > 0 ? (
@@ -31,16 +60,7 @@ function Chat({ userid: userId }) {
             key={`chat:${activeFriend.username}`}
             className="messages-container"
           >
-            {chatsMessages.map((message, index) => (
-              <p
-                key={`msg:${index}`}
-                className={`${
-                  message.to === userid ? "my-message" : "friends-message"
-                } message`}
-              >
-                {message.content}
-              </p>
-            ))}
+            {chatsMessages.map(generateMessage)}
           </div>
         </>
       ) : (

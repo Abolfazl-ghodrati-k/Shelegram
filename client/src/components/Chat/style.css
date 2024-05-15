@@ -1,5 +1,5 @@
 .chat-container {
-  height: calc(100vh - 40px);
+  height: calc(100vh - 50px);
   align-self: end;
   overflow-y: hidden;
   flex-grow: 1;
@@ -11,10 +11,9 @@
 .messages-container {
   display: flex;
   flex-direction: column-reverse;
-  gap: 10px;
+  gap: 30px;
   width: auto;
-  padding: 4px;
-  max-height: calc(100% - 60px);
+  padding: 4px 4px 30px 4px;
   overflow-y: auto;
 }
 
@@ -24,8 +23,29 @@
   align-items: center;
   justify-content: start;
   width: auto;
+  min-width: 200px;
   text-overflow: clip;
-  max-width: 50%;
+  position: relative;
+  z-index: 1;
+}
+
+.message-date {
+  position: absolute;
+}
+
+.my-message-date {
+  margin-left: auto;
+  left: 0;
+  bottom: 0;
+  transform: translateY(calc(100% + 7px));
+}
+
+.friends-message-date {
+  margin-right: auto;
+  right: 0;
+  bottom: 0;
+  transform: translateY(calc(100% + 7px));
+  color: black;
 }
 
 .friends-message {
