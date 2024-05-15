@@ -10,11 +10,11 @@ export default function useSocketSetup(setFriendList, setMessages) {
     socket.on("friends", (FriendList) => {
       setFriendList(FriendList);
     });
-    socket.emit("initialize_user", ({ friends }) => {
+    socket.emit("initialize_user", ({ friends, messages }) => {
       setFriendList(friends);
+      setMessages(messages);
     });
     socket.on("messages", (messages) => {
-      console.log(messages);
       setMessages(messages);
     });
     socket.on("recievedm", (message) => {

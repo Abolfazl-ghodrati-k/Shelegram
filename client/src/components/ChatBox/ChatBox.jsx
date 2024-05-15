@@ -15,6 +15,7 @@ function ChatBox({ userid }) {
                 message: Yup.string().min(1).max(255),
             })}
             onSubmit={(values, actions) => {
+                if(!values.message) return
                 const message = {
                     to: userid,
                     from: null,
