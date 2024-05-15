@@ -17,7 +17,7 @@ export default function useSocketSetup(setFriendList, setMessages) {
     socket.on("messages", (messages) => {
       setMessages(messages);
     });
-    socket.on("recievedm", (message) => {
+    socket.on("dm", (message) => {
       console.log("message");
       setMessages((prev) => {
         if (prev.some((prevMessage) => prevMessage.id === message.id)) {
