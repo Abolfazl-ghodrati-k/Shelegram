@@ -46,7 +46,6 @@ module.exports.handleSignUp = async (req, res) => {
         const user = {
             id: newUserQuery.rows[0].id,
             username: req.body.username,
-            userId: newUserQuery.rows[0].userId,
         };
         const token = jwt.sign(user, process.env.JWT_SECRET);
         res.json({ loggedIn: true, token, username: user.username });

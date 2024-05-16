@@ -10,10 +10,6 @@ import { LuImagePlus } from "react-icons/lu";
 
 const Profile = () => {
     const { user } = useContext(AccountContext);
-    const images = [
-        // "https://avatars.githubusercontent.com/u/104020673?v=4",
-        // "https://avatars.githubusercontent.com/u/104020673?v=4",
-    ];
 
     const inputRef = useRef(null);
 
@@ -33,7 +29,7 @@ const Profile = () => {
     return (
         <div className="profile-container">
             <div className="profile-images">
-                <ProfilePictures images={images} />
+                <ProfilePictures images={[]} />
                 <label htmlFor="profile-image" onClick={handleOpenFileSelect}>
                     <LuImagePlus size={20} color="white" />
                 </label>
