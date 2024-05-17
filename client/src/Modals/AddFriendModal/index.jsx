@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useRef, useState } from "react";
+import React, { useCallback, useContext, useRef } from "react";
 import { FriendContext } from "../../Home";
 import "./style.css";
 import { GrClose } from "react-icons/gr";
@@ -11,12 +11,10 @@ import useOutsideClick from "../../Hooks/useOutSideClick";
 import { toast } from "react-toastify";
 
 const AddFrindModal = ({ onClose }) => {
-    const [error, seterror] = useState("");
     const { setFriendList } = useContext(FriendContext);
     const modalRef = useRef(null);
 
     const closeModal = useCallback(() => {
-        seterror("");
         onClose();
     }, [onClose]);
 

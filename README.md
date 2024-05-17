@@ -1,5 +1,8 @@
 # Shelegram_process
-this repo is about learning to build a mern_stack chat app
+This repository is about learning to build a FullStack chat application.
+
+## Preview
+![chat app image](https://github.com/Abolfazl-ghodrati-k/Shelegram_process/shelegram.png)
 
 ## Technologies
 - [`React`](https://beta.reactjs.org/)
@@ -12,12 +15,9 @@ this repo is about learning to build a mern_stack chat app
 - [`JWT`](https://jwt.io/)
 
 ## Info
-simple chat app which you can register or signin by unique username
+simple chat app which you can register or SignIn by unique username
 adding friends
-notification on message recieving
 user status(online | offline)
-seen status for messages
-Dark mode
 
 ## incoming versions Features
 
@@ -26,6 +26,4 @@ Dark mode
 - sending images
 - contact actions: (blocking - pinning at top , ... )
 
-# check it out 
-[Shelegram](https://shelegram-demo.netlify.app/)
 

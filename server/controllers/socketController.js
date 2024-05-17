@@ -103,7 +103,7 @@ module.exports.disconnect = async (socket) => {
 
 module.exports.addFriend = async (socket, friendName, cb) => {
   const friend = await redisClient.hgetall(`userid:${friendName}`);
-  console.log(friend);
+  console.log("frined",friend);
 
   if (!friend || Object.keys(friend).length === 0) {
     cb({ done: false, errMsg: "User Doesnt exist" });
