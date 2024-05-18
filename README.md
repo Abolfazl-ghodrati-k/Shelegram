@@ -2,7 +2,7 @@
 This repository is about learning to build a FullStack chat application.
 
 ## Preview
-![chat app image](https://github.com/Abolfazl-ghodrati-k/Shelegram_process/blob/main/shelegram.png)
+![chat app image](https://github.com/Abolfazl-ghodrati-k/Shelegram/blob/main/shelegram.png)
 
 ## Technologies
 - [`React`](https://beta.reactjs.org/)
